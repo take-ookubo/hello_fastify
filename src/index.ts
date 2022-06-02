@@ -10,6 +10,7 @@ const fastify = Fastify({
 interface IHelloParams {
   id: number;
   name: string;
+  email: string;
 }
 
 // Top level await を避けるためアロー関数配下に追加
@@ -31,6 +32,23 @@ const main = async () => {
     })
   })
 
+  // NOTE: curl http://localhost:3000/hello -X POST -H "Content-Type: application/json" -d '{"name":"test", "email": "test@example.com"}'
+  fastify.post<{Body: IHelloParams}>('/hello', async (request, reply) => {
+    const newUser = await prisma.user.create({
+      data: {
+        name: request.body.name,
+        email: request.body.email,
+      }
+    })
+
+    reply.send({
+      req: {
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email,
+      }
+    })
+  })
   // Run the server!
   fastify.listen(3000, function (err, address) {
     if (err) {
