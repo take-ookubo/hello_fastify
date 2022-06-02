@@ -28,6 +28,7 @@ const main = async () => {
       req: {
         id: user?.id,
         name: user?.name,
+        email: user?.email,
       }
     })
   })
