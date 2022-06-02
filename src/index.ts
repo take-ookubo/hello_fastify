@@ -34,20 +34,28 @@ const main = async () => {
 
   // NOTE: curl http://localhost:3000/hello -X POST -H "Content-Type: application/json" -d '{"name":"test", "email": "test@example.com"}'
   fastify.post<{Body: IHelloParams}>('/hello', async (request, reply) => {
-    const newUser = await prisma.user.create({
-      data: {
-        name: request.body.name,
-        email: request.body.email,
+    try {
+      const newUser = await prisma.user.create({
+        data: {
+          name: request.body.name,
+          email: request.body.email,
+        }
+      })
+      reply.send({
+        req: {
+          id: newUser.id,
+          name: newUser.name,
+          email: newUser.email,
+        }
+      })
+    } catch (e: any) {
+      console.log(e)
+      if(e.code == 'P2002'){
+        reply.code(400).send(`Not unique email: ${request.body.email}`)
+      }else{
+        reply.code(500).send(" Internal Server Error")
       }
-    })
-
-    reply.send({
-      req: {
-        id: newUser.id,
-        name: newUser.name,
-        email: newUser.email,
-      }
-    })
+    }
   })
   // Run the server!
   fastify.listen(3000, function (err, address) {
