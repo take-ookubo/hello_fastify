@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  pgsql:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: hello_fastify
+      POSTGRES_PASSWORD: mysecretpassword
+    volumes:
+      - database:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d
+    ports:
+      - 5432:5432/tcp
+
+volumes:
+  database:
+    driver: local
