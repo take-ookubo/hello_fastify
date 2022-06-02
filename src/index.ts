@@ -1,4 +1,7 @@
+import { PrismaClient } from '@prisma/client'
 import Fastify from 'fastify'
+
+const prisma = new PrismaClient()
 const fastify = Fastify({
   logger: true
 })
@@ -16,11 +19,14 @@ const main = async () => {
     reply.send({ hello: 'world' })
   })
 
-  fastify.get<{Params: IHelloParams}>('/hello/:id/:name', (request, reply) => {
+  fastify.get<{Params: IHelloParams}>('/hello/:id', async (request, reply) => {
+    const user = await prisma.user.findUnique({
+      where: {id: Number(request.params?.id)}
+    })
     reply.send({
       req: {
-        id: request.params.id + 1,
-        name: request.params.name,
+        id: user?.id,
+        name: user?.name,
       }
     })
   })
