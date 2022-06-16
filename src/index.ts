@@ -51,7 +51,7 @@ const main = async () => {
           email: newUser.email,
         },
       });
-    } catch (e: any) {
+    } catch (e) {
       console.log(e);
       if (e.code == "P2002") {
         reply.code(400).send(`Not unique email: ${request.body.email}`);
