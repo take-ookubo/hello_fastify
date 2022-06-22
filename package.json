@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "prepare": "husky install",
     "build": "tsc -p tsconfig.json",
     "dev-comment": "--exit-child がないと再読み込みされない",
     "dev": "ts-node-dev --exit-child src/index.ts",
