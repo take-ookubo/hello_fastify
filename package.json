@@ -5,7 +5,7 @@
     "dev-comment": "--exit-child がないと再読み込みされない",
     "dev": "ts-node-dev --exit-child src/index.ts",
     "start": "node dist/index.js",
-    "test": "npx jest"
+    "test": "jest --runInBand src"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
