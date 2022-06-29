@@ -16,6 +16,8 @@
   "dependencies": {
     "@prisma/client": "^3.14.0",
     "fastify": "^3.29.0",
+    "fastify-autoload": "^3.13.0",
+    "fastify-plugin": "^3.0.1",
     "ts-node": "^10.8.0",
     "typescript": "^4.7.2"
   },
