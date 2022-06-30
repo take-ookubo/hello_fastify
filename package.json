@@ -5,7 +5,7 @@
     "dev-comment": "--exit-child がないと再読み込みされない",
     "dev": "ts-node-dev --exit-child src/index.ts",
     "start": "node dist/index.js",
-    "test": "jest --runInBand src"
+    "test": "npx prisma migrate reset --force && jest --coverage"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
